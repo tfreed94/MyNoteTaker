@@ -3,7 +3,7 @@ const fs = require("fs");
 const dbJSON = require('./db/db.json');
  
 module.exports = (app) => {
-    let savedNotes = JSON.parse(fs.readFileSync('./db/db.json', 'utf8'));
+    let noteList = JSON.parse(fs.readFileSync('./db/db.json', 'utf8'));
     app.get("/api/notes", (req, res) => {
         return res.json(savedNotes);
     });
@@ -16,6 +16,6 @@ module.exports = (app) => {
         }
         const noteID = finalID + 1;
         savedNotes.push({ noteID, ...req.body });
-        res.json(savedNotes.slice(-1));
+        res.json(noteList.slice(-1));
     });
 };
