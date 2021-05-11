@@ -2,6 +2,7 @@
 
 
 ![license](https://img.shields.io/badge/License--green?.svg)
+This project is covered by the MIT license.
 
 # Table of Contents 
 1. [Project Description](#description)
