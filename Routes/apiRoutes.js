@@ -1,6 +1,5 @@
-
-const fs = require("fs");
 const savedNotes = require("../db/db.json");
+const fs = require("fs");
 
 module.exports = (app) => {
     function notes(userInput) {
@@ -11,11 +10,11 @@ module.exports = (app) => {
             }
         });
     }
-
-    app.get("/api/notes", function (req, res) {
+    // Get and Post API Routes
+    app.get("/api/notes", (req, res) => {
         res.json(savedNotes);
     });
-    app.post("/api/notes", function (req, res) {
+    app.post("/api/notes", (req, res) => {
         if (savedNotes.length == 0) {
             req.body.id = "0";
         } else {
