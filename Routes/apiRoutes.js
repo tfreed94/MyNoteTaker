@@ -1,21 +1,29 @@
-const fs = require("fs");
 
-const dbJSON = require('./db/db.json');
- 
+const fs = require("fs");
+const savedNotes = require("../db/db.json");
+
 module.exports = (app) => {
-    let noteList = JSON.parse(fs.readFileSync('./db/db.json', 'utf8'));
-    app.get("/api/notes", (req, res) => {
-        return res.json(savedNotes);
+    function notes(userInput) {
+        userInput = JSON.stringify(userInput);
+        fs.writeFileSync("./db/db.json", userInput, (err) =>  {
+            if (err) {
+                return console.log(err);
+            }
+        });
+    }
+
+    app.get("/api/notes", function (req, res) {
+        res.json(savedNotes);
     });
-    app.post('/api/notes', (req, res) => {
-        let finalID;
-        if (savedNotes.length) {
-            finalID = Math.max(...(savedNotes.map(note => note.id)));
+    app.post("/api/notes", function (req, res) {
+        if (savedNotes.length == 0) {
+            req.body.id = "0";
         } else {
-            finalID = 0;
+            req.body.id = JSON.stringify(JSON.parse(savedNotes[savedNotes.length - 1].id) + 1);
         }
-        const noteID = finalID + 1;
-        savedNotes.push({ noteID, ...req.body });
-        res.json(noteList.slice(-1));
+        savedNotes.push(req.body);
+        notes(savedNotes);
+        res.json(req.body);
     });
+
 };
