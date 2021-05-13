@@ -8,8 +8,8 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 // Require API and HTML routes
-require("./routes/apiRoutes")(app);
-require("./routes/htmlRoutes")(app);
+require("./Routes/apiRoutes")(app);
+require("./Routes/htmlRoutes")(app);
 app.use(express.static("public"));
 
 // Listener for port 4500
